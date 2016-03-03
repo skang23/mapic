@@ -13,7 +13,7 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Parse.initializeWithConfiguration(
@@ -23,6 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://ancient-woodland-45544.herokuapp.com/parse"
             })
         )
+        if PFUser.currentUser() != nil {
+            print("Current user detected")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+            window?.rootViewController = vc
+            // if there is a logged in user then load the home view controller
+        }
         // Override point for customization after application launch.
         return true
     }
